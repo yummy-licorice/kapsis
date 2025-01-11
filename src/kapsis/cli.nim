@@ -174,18 +174,18 @@ proc promptSecret*(label: string, color:string="white", required=true): string =
   if result.len == 0 and required == true:
     return promptSecret(label, required=true)
 
-proc promptConfirm*(label: string, icon: string="👉"): bool =
+proc promptConfirm*(label: string, icon: string="[y/n]"): bool =
   ## Prompt a confirmation label that allows only boolean input values as follows:
   ##      Positive: `1`, `yes`, `True`, `TRUE`, `YES`, `Yes`, `y`, `Y`
   ##      Negative: `0`, `no`, `False`, `FALSE`, `NO`, `No`, `n`, `N`
-  let answer = prompt(label)
+  let answer = prompt(label & " " & icon)
   case answer:
   of "true", "1", "yes", "True", "TRUE", "YES", "Yes", "y", "Y":
       result = true
   of "false", "0", "no", "False", "FALSE", "NO", "No", "n", "N":
       result =  false
   else:
-      result = promptConfirm(label)
+      result = promptConfirm(label & " " & icon)
 
 proc askEmail*(label: string, default = "", skippable = false): string =
   ## Prompt for a valid email address. Set `skippable` true
